@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { ITeam } from 'app/teams/teams.interface';
 
@@ -6,6 +11,7 @@ import { ITeam } from 'app/teams/teams.interface';
   selector: 'app-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamsComponent implements OnInit {
   @Input() teams: ITeam[];

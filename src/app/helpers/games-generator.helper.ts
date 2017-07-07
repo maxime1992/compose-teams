@@ -1,0 +1,51 @@
+import * as Combinatorics from 'js-combinatorics';
+
+import { IPlayer, ITeam } from 'app/teams/teams.interface';
+import { IGame } from 'app/games/games.interface';
+
+export function generateGames(players: IPlayer[]): IGame[] {
+  const teams = generateTeams(players);
+  const complement = (t: IPlayer[]) => players.filter(p => !t.includes(p));
+  return teams
+    .map(team1 => {
+      const team2 = complement(team1);
+      const total1 = grade(team1);
+      const total2 = grade(team2);
+      const teams: [ITeam, ITeam] = [
+        {
+          players: team1,
+          grade: total1,
+        },
+        {
+          players: team2,
+          grade: total2,
+        },
+      ];
+      return {
+        teams,
+        gradeDifference: Math.abs(total1 - total2),
+      };
+    })
+    .sort((a, b) => a.gradeDifference - b.gradeDifference);
+}
+
+function generateTeams(players: IPlayer[]): IPlayer[][] {
+  const combinations: IPlayer[][] = Combinatorics.combination(
+    players,
+    players.length / 2
+  ).toArray();
+  // we remove half of it as they are the complementaries!
+  return combinations.slice(0, combinations.length / 2);
+}
+
+function grade(player: IPlayer | IPlayer[]): number {
+  if (Array.isArray(player)) {
+    return player.map(grade).reduce(plus, 0);
+  } else {
+    return player.grade;
+  }
+}
+
+function plus(a, b) {
+  return a + b;
+}
