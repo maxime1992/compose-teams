@@ -4,6 +4,6 @@ export interface IPlayer {
 }
 
 export interface ITeam {
-  score: number;
+  grade: number;
   players: IPlayer[];
 }

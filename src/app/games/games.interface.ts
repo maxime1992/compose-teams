@@ -1,6 +1,6 @@
 import { ITeam } from 'app/teams/teams.interface';
 
 export interface IGame {
-  score: number;
+  grade: number;
   teams: [ITeam, ITeam];
 }
