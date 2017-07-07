@@ -15,6 +15,7 @@ import { ITeam } from 'app/teams/teams.interface';
 })
 export class TeamsComponent implements OnInit {
   @Input() teams: ITeam[];
+  @Input() gradeDifference: number;
 
   constructor() {}
 

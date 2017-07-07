@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { IPlayer } from 'app/teams/teams.interface';
 
@@ -8,22 +9,23 @@ import { IPlayer } from 'app/teams/teams.interface';
   styleUrls: ['./compose-teams.component.scss'],
 })
 export class ComposeTeamsComponent implements OnInit {
+  deltaMaximumCtrl = new FormControl(0);
   players: IPlayer[];
 
   constructor() {}
 
   ngOnInit() {
     this.players = [
-      { name: 'Victorious', grade: 4 },
-      { name: 'Topito', grade: 7 },
-      { name: 'Samy', grade: 3 },
+      { name: 'Victorious', grade: 3.5 },
+      { name: 'Topito', grade: 6.5 },
+      { name: 'Samy', grade: 3.5 },
       { name: 'Skoko', grade: 9 },
       { name: 'Bescudie', grade: 6 },
-      { name: 'Maximouss', grade: 5 },
-      { name: 'Abdel', grade: 6 },
-      { name: 'Jordy', grade: 7 },
-      { name: 'Etienne', grade: 6 },
-      { name: 'Kook', grade: 5 },
+      { name: 'Maximouss', grade: 6 },
+      { name: 'Abdel', grade: 6.5 },
+      { name: 'Jordy', grade: 6 },
+      { name: 'Etienne', grade: 5.5 },
+      { name: 'Kook', grade: 4.5 },
     ];
   }
 }

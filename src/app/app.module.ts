@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TeamComponent } from './team/team.component';
@@ -15,7 +16,7 @@ import { ComposeTeamsComponent } from './compose-teams/compose-teams.component';
     GamesComponent,
     ComposeTeamsComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

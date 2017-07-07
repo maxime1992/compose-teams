@@ -1,4 +1,15 @@
-<div class="col-xs-6" *ngFor="let team of teams">
-  {{ team.grade }}
-  <app-team [players]="team.players"></app-team>
+<div class="col-xs-5">
+  <div class="text-right grade">{{ teams[0].grade }}</div>
+
+  <app-team [players]="teams[0].players"></app-team>
+</div>
+
+<div class="col-xs-2 text-center">
+  &Delta; {{ gradeDifference }}
+</div>
+
+<div class="col-xs-5">
+  <div class="text-right grade">{{ teams[1].grade }}</div>
+
+  <app-team [players]="teams[1].players"></app-team>
 </div>
