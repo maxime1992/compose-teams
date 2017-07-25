@@ -29,13 +29,18 @@ export class GamesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['players']) {
+      // generate a new games only if needed
       this.gamesBackup = generateGames(this.players);
     }
 
+    let deltaMaximum = this.deltaMaximum;
+
     if (changes['deltaMaximum']) {
-      this.games = this.gamesBackup.filter(
-        game => game.gradeDifference <= changes['deltaMaximum'].currentValue
-      );
+      deltaMaximum = changes['deltaMaximum'].currentValue;
     }
+
+    this.games = this.gamesBackup.filter(
+      game => game.gradeDifference <= deltaMaximum
+    );
   }
 }

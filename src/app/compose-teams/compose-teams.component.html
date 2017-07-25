@@ -3,4 +3,4 @@
   <input type="number" class="form-control" step="1" placeholder="Delta maximum" min="0" [formControl]="deltaMaximumCtrl">
 </div>
 
-<app-games [players]="players" [deltaMaximum]="deltaMaximumCtrl.value"></app-games>
+<app-games [players]="players$ | async" [deltaMaximum]="deltaMaximumCtrl.value"></app-games>

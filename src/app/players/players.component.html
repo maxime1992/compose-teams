@@ -1,0 +1,27 @@
+<!--<ul class="list-group">
+  <li class="list-group-item" *ngFor="let player of players$ | async">
+    <span class="badge">{{ player.grade }}</span> {{ player.name }}
+  </li>
+</ul>-->
+
+<form *ngIf="playersFormGroup" [formGroup]="playersFormGroup">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Grade</td>
+        <td>Edit grade</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let player of players; trackBy: trackByName">
+        <td>{{player.name}}</td>
+        <td>{{player.grade}}</td>
+        <td>
+          <input type="number" min="0" max="10" [formControlName]="player.name" class="form-control">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

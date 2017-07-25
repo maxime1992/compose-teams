@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 import { IPlayer } from 'app/teams/teams.interface';
+import { PlayersService } from 'app/players.service';
 
 @Component({
   selector: 'app-compose-teams',
@@ -10,22 +12,11 @@ import { IPlayer } from 'app/teams/teams.interface';
 })
 export class ComposeTeamsComponent implements OnInit {
   deltaMaximumCtrl = new FormControl(0);
-  players: IPlayer[];
+  players$: Observable<IPlayer[]>;
 
-  constructor() {}
+  constructor(private playersService: PlayersService) {}
 
   ngOnInit() {
-    this.players = [
-      { name: 'Victorious', grade: 3.5 },
-      { name: 'Topito', grade: 6.5 },
-      { name: 'Samy', grade: 3.5 },
-      { name: 'Skoko', grade: 9 },
-      { name: 'Bescudie', grade: 6 },
-      { name: 'Maximouss', grade: 6 },
-      { name: 'Abdel', grade: 6.5 },
-      { name: 'Jordy', grade: 6 },
-      { name: 'Etienne', grade: 5.5 },
-      { name: 'Kook', grade: 4.5 },
-    ];
+    this.players$ = this.playersService.players$;
   }
 }
