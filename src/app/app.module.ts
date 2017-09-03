@@ -22,7 +22,6 @@ import { TeamComponent } from 'app/games/teams/team/team.component';
 import { TeamsComponent } from 'app/games/teams/teams.component';
 import { PlayersService } from 'app/players.service';
 import { PlayersComponent } from 'app/players/players.component';
-import { SelectDeltaMaxComponent } from 'app/select-delta-max/select-delta-max.component';
 import { Need10PlayersComponent } from './need-10-players/need-10-players.component';
 
 @NgModule({
@@ -32,7 +31,6 @@ import { Need10PlayersComponent } from './need-10-players/need-10-players.compon
     TeamsComponent,
     GamesComponent,
     PlayersComponent,
-    SelectDeltaMaxComponent,
     Need10PlayersComponent,
   ],
   imports: [

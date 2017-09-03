@@ -11,7 +11,6 @@ import { PlayersService } from 'app/players.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  deltaMax: number;
   nbGames$: Observable<number>;
 
   players$: Observable<IPlayer[]>;
@@ -26,9 +25,5 @@ export class AppComponent implements OnInit {
     this.players$ = this.playersService.players$;
     this.selectedPlayers$ = this.playersService.selectedPlayers$;
     this.nbGames$ = this.gameService.games$.map(games => games.length);
-  }
-
-  onDeltaMaxChanges(deltaMax: number) {
-    this.gameService.setDeltaMax(deltaMax);
   }
 }

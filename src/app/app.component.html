@@ -1,20 +1,22 @@
 <div fxLayout="column" fxFill>
   <md-toolbar color="primary">
-    Compose teams
+    <span class="bold">Compose teams</span>
+
+    <span *ngIf="nbGames$ | async as nbGames">
+      &nbsp;-
+      <span *ngIf="nbGames !== 0" class="color-accent">
+        {{ nbGames }} games available
+      </span>
+    </span>
   </md-toolbar>
 
   <md-sidenav-container fxFlex>
     <md-sidenav [mode]="'side'" [opened]="true">
-      <app-select-delta-max
-        (onDeltaMaxChanges)="onDeltaMaxChanges($event)"
-        [nbGames]="nbGames$ | async"
-      ></app-select-delta-max>
-
       <app-players></app-players>
     </md-sidenav>
 
     <div *ngIf="selectedPlayers$ | async as selectedPlayers" fxFill>
-      <app-games *ngIf="selectedPlayers.length === 10; else need10Players" [deltaMax]="deltaMax"></app-games>
+      <app-games *ngIf="selectedPlayers.length === 10; else need10Players"></app-games>
 
       <ng-template #need10Players>
         <app-need-10-players [selectedPlayers]="selectedPlayers"></app-need-10-players>
