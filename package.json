@@ -5,10 +5,27 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "check": "yarn run lint:check && yarn run prettier:check",
+    "check:fix": "yarn run lint:fix && yarn run prettier:fix",
+    "lint:check": "ng lint --type-check",
+    "lint:fix": "yarn run lint:check -- --fix",
+    "build:prod": "ng build --prod --build-optimizer --no-sourcemap",
+    "prettier:base": "yarn run prettier -- --single-quote --trailing-comma es5",
+    "prettier:base-files": "yarn run prettier:base -- './{e2e,src}/**/*.{scss,ts}'",
+    "prettier:fix": "yarn run prettier:base-files -- --write",
+    "prettier:check": "yarn run prettier:base-files -- -l",
+    "precommit": "lint-staged",
+    "prepush": "yarn run lint:check"
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{ts,scss}": [
+        "npm run prettier:base -- -l"
+      ]
+    }
   },
   "private": true,
   "dependencies": {
@@ -38,6 +55,7 @@
     "@types/jasminewd2": "2.0.3",
     "@types/node": "8.0.26",
     "codelyzer": "3.1.2",
+    "husky": "0.14.3",
     "jasmine-core": "2.8.0",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "1.7.1",
@@ -46,9 +64,12 @@
     "karma-coverage-istanbul-reporter": "1.3.0",
     "karma-jasmine": "1.1.0",
     "karma-jasmine-html-reporter": "0.2.2",
+    "lint-staged": "4.0.4",
+    "prettier": "1.6.1",
     "protractor": "5.1.2",
     "ts-node": "3.3.0",
     "tslint": "5.7.0",
+    "tslint-config-prettier": "1.5.0",
     "typescript": "2.5.2"
   }
 }
