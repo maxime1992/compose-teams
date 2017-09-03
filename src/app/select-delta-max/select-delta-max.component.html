@@ -1,15 +1,19 @@
-<md-toolbar color="accent">
-  Delta {{ deltaMaxCtrl.valueChanges | async }}: {{ nbGames }} games
-</md-toolbar>
+<div fxLayout="column">
 
-<md-input-container>
-  <input
-    mdInput
-    type="number"
-    step="1"
-    placeholder="Delta maximum"
-    min="0"
-    [formControl]="deltaMaxCtrl"
-    autocomplete="off"
-  >
-</md-input-container>
+  <md-toolbar color="accent">
+    Delta {{ deltaMaxCtrl.valueChanges | async }}: {{ nbGames }} games
+  </md-toolbar>
+
+  <md-input-container>
+    <input
+      mdInput
+      type="number"
+      step="1"
+      placeholder="Delta maximum"
+      min="0"
+      [formControl]="deltaMaxCtrl"
+      autocomplete="off"
+    >
+  </md-input-container>
+
+</div>

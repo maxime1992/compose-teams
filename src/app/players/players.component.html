@@ -56,9 +56,9 @@
   </ng-container>
 
   <ng-container cdkColumnDef="remove">
-    <md-header-cell *cdkHeaderCellDef>x</md-header-cell>
+    <md-header-cell *cdkHeaderCellDef>Remove</md-header-cell>
     <md-cell *cdkCellDef="let row">
-      <span (click)="removePlayer(row)">x</span>
+      <span (click)="removePlayer(row)" class="delete"><md-icon>delete</md-icon></span>
     </md-cell>
   </ng-container>
 

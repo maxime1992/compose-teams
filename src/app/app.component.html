@@ -13,7 +13,7 @@
       <app-players></app-players>
     </md-sidenav>
 
-    <div *ngIf="selectedPlayers$ | async as selectedPlayers">
+    <div *ngIf="selectedPlayers$ | async as selectedPlayers" fxFill>
       <app-games *ngIf="selectedPlayers.length === 10; else need10Players" [deltaMax]="deltaMax"></app-games>
 
       <ng-template #need10Players>
