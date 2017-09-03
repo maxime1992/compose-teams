@@ -43,6 +43,7 @@
     "@angular/router": "4.4.0-RC.0",
     "core-js": "2.5.1",
     "js-combinatorics": "0.5.2",
+    "material-design-icons-iconfont": "3.0.3",
     "rxjs": "5.4.3",
     "zone.js": "0.8.17"
   },
