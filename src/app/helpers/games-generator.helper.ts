@@ -1,9 +1,14 @@
 import * as Combinatorics from 'js-combinatorics';
 
-import { IPlayer, ITeam } from 'app/teams/teams.interface';
 import { IGame } from 'app/games/games.interface';
+import { ITeam } from 'app/games/teams/teams.interface';
+import { IPlayer } from 'app/players.interface';
 
 export function generateGames(players: IPlayer[]): IGame[] {
+  if (players.length === 0) {
+    return [];
+  }
+
   const teams = generateTeams(players);
   const complement = (t: IPlayer[]) => players.filter(p => !t.includes(p));
   return teams
@@ -11,7 +16,7 @@ export function generateGames(players: IPlayer[]): IGame[] {
       const team2 = complement(team1);
       const total1 = grade(team1);
       const total2 = grade(team2);
-      const teams: [ITeam, ITeam] = [
+      const mergedTeams: [ITeam, ITeam] = [
         {
           players: team1,
           grade: total1,
@@ -22,7 +27,7 @@ export function generateGames(players: IPlayer[]): IGame[] {
         },
       ];
       return {
-        teams,
+        teams: mergedTeams,
         gradeDifference: Math.abs(total1 - total2),
       };
     })

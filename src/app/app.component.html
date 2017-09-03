@@ -1,11 +1,24 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <span class="navbar-brand">Compose teams</span>
+<div fxLayout="column" fxFill>
+  <md-toolbar color="primary">
+    Compose teams
+  </md-toolbar>
+
+  <md-sidenav-container fxFlex>
+    <md-sidenav [mode]="'side'" [opened]="true">
+      <app-select-delta-max
+        (onDeltaMaxChanges)="onDeltaMaxChanges($event)"
+        [nbGames]="nbGames$ | async"
+      ></app-select-delta-max>
+
+      <app-players></app-players>
+    </md-sidenav>
+
+    <div *ngIf="selectedPlayers$ | async as selectedPlayers">
+      <app-games *ngIf="selectedPlayers.length === 10; else need10Players" [deltaMax]="deltaMax"></app-games>
+
+      <ng-template #need10Players>
+        <app-need-10-players [selectedPlayers]="selectedPlayers"></app-need-10-players>
+      </ng-template>
     </div>
-  </div>
-</nav>
-
-<app-players></app-players>
-
-<app-compose-teams></app-compose-teams>
+  </md-sidenav-container>
+</div>

@@ -1,46 +1,22 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
+import { GamesService } from 'app/games.service';
 import { IGame } from 'app/games/games.interface';
-import { IPlayer } from 'app/teams/teams.interface';
-import { generateGames } from 'app/helpers/games-generator.helper';
 
 @Component({
   selector: 'app-games',
   templateUrl: './games.component.html',
   styleUrls: ['./games.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamesComponent implements OnInit, OnChanges {
-  @Input() players: IPlayer[];
-  @Input() deltaMaximum: number;
-  private gamesBackup: IGame[];
-  games: IGame[];
+export class GamesComponent implements OnInit {
+  @Input() deltaMax: number;
 
-  constructor() {}
+  games$: Observable<IGame[]>;
 
-  ngOnInit() {}
+  constructor(private gamesService: GamesService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['players']) {
-      // generate a new games only if needed
-      this.gamesBackup = generateGames(this.players);
-    }
-
-    let deltaMaximum = this.deltaMaximum;
-
-    if (changes['deltaMaximum']) {
-      deltaMaximum = changes['deltaMaximum'].currentValue;
-    }
-
-    this.games = this.gamesBackup.filter(
-      game => game.gradeDifference <= deltaMaximum
-    );
+  ngOnInit() {
+    this.games$ = this.gamesService.games$;
   }
 }

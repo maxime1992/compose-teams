@@ -1,0 +1,18 @@
+<md-card>
+  <md-card-content>
+    <md-table [dataSource]="dataSource">
+      <ng-container cdkColumnDef="grade">
+        <md-header-cell *cdkHeaderCellDef>grade ({{ sumGrades | number:'1.1-1' }})</md-header-cell>
+        <md-cell *cdkCellDef="let row">{{ row.grade | number:'1.1-1' }}</md-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="name">
+        <md-header-cell *cdkHeaderCellDef>Name</md-header-cell>
+        <md-cell *cdkCellDef="let row">{{ row.name }}</md-cell>
+      </ng-container>
+
+      <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+  </md-card-content>
+</md-card>

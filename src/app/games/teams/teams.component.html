@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="teams">
+
+  <div fxFlex="45%">
+    <app-team [players]="teams[0].players" [sumGrades]="teams[0].grade"></app-team>
+  </div>
+
+  <div class="text-center delta" fxFlex>
+    &Delta; {{ gradeDifference | number:'1.1-1' }}
+  </div>
+
+  <div fxFlex="45%">
+    <app-team [players]="teams[1].players" [sumGrades]="teams[1].grade"></app-team>
+  </div>
+
+</div>

@@ -1,7 +1,4 @@
-export interface IPlayer {
-  name: string;
-  grade: number;
-}
+import { IPlayer } from 'app/players.interface';
 
 export interface ITeam {
   grade: number;

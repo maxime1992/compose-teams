@@ -1,6 +1,0 @@
-<div class="input-group">
-  <span class="input-group-addon">&Delta; max</span>
-  <input type="number" class="form-control" step="1" placeholder="Delta maximum" min="0" [formControl]="deltaMaximumCtrl">
-</div>
-
-<app-games [players]="players$ | async" [deltaMaximum]="deltaMaximumCtrl.value"></app-games>

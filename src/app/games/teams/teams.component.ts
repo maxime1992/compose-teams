@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
-  Input,
   ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
 } from '@angular/core';
 
-import { ITeam } from 'app/teams/teams.interface';
+import { ITeam } from 'app/games/teams/teams.interface';
 
 @Component({
   selector: 'app-teams',
