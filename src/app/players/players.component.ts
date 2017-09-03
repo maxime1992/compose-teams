@@ -133,8 +133,14 @@ export class PlayersComponent implements OnInit, OnDestroy {
     setTimeout(() => this.nameNewPlayer.focus(), 0);
   }
 
+  closeAndResetNewPlayerForm() {
+    this.isNewPlayerFormGroupVisible = false;
+    this.newPlayerFormGroup.reset();
+  }
+
   addNewPlayer({ name }: { name: string }) {
     this.playersService.addPlayer(name, 0);
+    this.closeAndResetNewPlayerForm();
   }
 
   removePlayer(player: IPlayer) {
