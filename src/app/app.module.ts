@@ -14,6 +14,7 @@ import {
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng2Webstorage } from 'ngx-webstorage';
 
 import { AppComponent } from 'app/app.component';
 import { GamesService } from 'app/games.service';
@@ -47,6 +48,7 @@ import { Need10PlayersComponent } from './need-10-players/need-10-players.compon
     MdButtonModule,
     MdCheckboxModule,
     MdIconModule,
+    Ng2Webstorage,
   ],
   providers: [PlayersService, GamesService],
   bootstrap: [AppComponent],

@@ -31,6 +31,11 @@
   </div>
 </form>
 
+<div *ngIf="!isNewPlayerFormGroupVisible && nbPlayers === 0" class="no-player-atm">
+  <p>You don't have any player at the moment</p>
+  <p>You can <span (click)="openNewPlayerForm()" class="color-primary cursor-pointer"><b>add one</b></span></p>
+</div>
+
 <md-table *ngIf="nbPlayers && playersFormGroup" [dataSource]="dataSource" [trackBy]="trackByName" [formGroup]="playersFormGroup">
   <ng-container cdkColumnDef="grade">
     <md-header-cell *cdkHeaderCellDef>grade</md-header-cell>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { sortPlayersByGradeAndNames } from 'app/helpers/players.helper';
@@ -16,7 +17,16 @@ export class PlayersService {
   public selectedPlayers$ = this.players$.map(players =>
     players.filter(player => player.isSelected)
   );
-  constructor() {}
+
+  constructor(private storage: LocalStorageService) {
+    const players: IPlayer[] = this.storage.retrieve('players');
+
+    if (players) {
+      this._players$.next(players);
+    } else {
+      this.persistPlayers([]);
+    }
+  }
 
   changeUserGrade(playerName: string, grade: number): void {
     const players = this._players$.value;
@@ -26,6 +36,7 @@ export class PlayersService {
     );
 
     this._players$.next(updatedPlayers);
+    this.persistPlayers(updatedPlayers);
   }
 
   changeUserIsSelected(playerName: string, isSelected: boolean): void {
@@ -37,6 +48,7 @@ export class PlayersService {
     );
 
     this._players$.next(updatedPlayers);
+    this.persistPlayers(updatedPlayers);
   }
 
   addPlayer(playerName: string, grade: number): void {
@@ -44,15 +56,25 @@ export class PlayersService {
       throw new Error('Player already exists');
     }
 
-    this._players$.next([
+    const updatedPlayers = [
       ...this._players$.value,
       { name: playerName, grade, isSelected: false },
-    ]);
+    ];
+
+    this._players$.next(updatedPlayers);
+    this.persistPlayers(updatedPlayers);
   }
 
   removePlayer(name: string): void {
-    this._players$.next(
-      this._players$.value.filter(player => player.name !== name)
+    const updatedPlayers = this._players$.value.filter(
+      player => player.name !== name
     );
+    
+    this._players$.next(updatedPlayers);
+    this.persistPlayers(updatedPlayers);
+  }
+
+  persistPlayers(players: IPlayer[]) {
+    this.storage.store('players', players);
   }
 }
