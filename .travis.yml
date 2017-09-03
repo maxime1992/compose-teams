@@ -1,0 +1,19 @@
+sudo: false
+
+language: node_js
+node_js:
+  - 8
+
+install:
+  - yarn install
+
+script:
+  - yarn run build:prod -- --base-href "https://maxime1992.github.io/compose-teams/"
+
+deploy:
+  skip_cleanup: true
+  provider: pages
+  github_token: $GITHUB_TOKEN
+  local_dir: dist
+  on:
+    branch: master
