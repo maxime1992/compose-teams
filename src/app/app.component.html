@@ -1,5 +1,9 @@
 <div fxLayout="column" fxFill>
   <md-toolbar color="primary">
+    <button md-icon-button (click)="toggleSidenav()">
+      <md-icon>menu</md-icon>
+    </button>
+
     <span class="bold">Compose teams</span>
 
     <span *ngIf="nbGames$ | async as nbGames">
@@ -11,7 +15,7 @@
   </md-toolbar>
 
   <md-sidenav-container fxFlex>
-    <md-sidenav [mode]="'side'" [opened]="true">
+    <md-sidenav #sidenav [mode]="sidenavType" [opened]="isSidenavOpened">
       <app-players></app-players>
     </md-sidenav>
 
