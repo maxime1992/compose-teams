@@ -31,7 +31,7 @@
   </div>
 </form>
 
-<md-table [dataSource]="dataSource" [trackBy]="trackByName" *ngIf="playersFormGroup" [formGroup]="playersFormGroup">
+<md-table *ngIf="nbPlayers && playersFormGroup" [dataSource]="dataSource" [trackBy]="trackByName" [formGroup]="playersFormGroup">
   <ng-container cdkColumnDef="grade">
     <md-header-cell *cdkHeaderCellDef>grade</md-header-cell>
     <md-cell *cdkCellDef="let row">

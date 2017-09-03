@@ -26,6 +26,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   playersFormGroup: FormGroup;
   selectedPlayers$: Observable<IPlayer[]>;
   playersSubscriptions: { [key: string]: Subscription } = {};
+  nbPlayers: number;
 
   displayedColumns = ['name', 'grade', 'select', 'remove'];
   dataSource: ExampleDataSource | null;
@@ -48,6 +49,12 @@ export class PlayersComponent implements OnInit, OnDestroy {
     this.playersService.players$
       .takeUntil(this.onDestroy$)
       .do(players => this.updateFormControl(players))
+      .do(players => {
+        if (players.length === 0) {
+          this.openNewPlayerForm();
+        }
+      })
+      .do(players => (this.nbPlayers = players.length))
       .subscribe();
 
     this.selectedPlayers$ = this.playersService.selectedPlayers$.takeUntil(
