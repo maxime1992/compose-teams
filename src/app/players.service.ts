@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { sortPlayersByGradeAndNames } from 'app/helpers/players.helper';
+import {
+  sortPlayersByGradeAndNames,
+  sortPlayersByNames,
+} from 'app/helpers/players.helper';
 import { IPlayer } from 'app/players.interface';
 
 @Injectable()
@@ -12,11 +15,11 @@ export class PlayersService {
   public players$ = this._players$
     .asObservable()
     .distinctUntilChanged()
-    .map(sortPlayersByGradeAndNames);
+    .map(sortPlayersByNames);
 
-  public selectedPlayers$ = this.players$.map(players =>
-    players.filter(player => player.isSelected)
-  );
+  public selectedPlayers$ = this.players$
+    .map(players => players.filter(player => player.isSelected))
+    .map(sortPlayersByGradeAndNames);
 
   constructor(private storage: LocalStorageService) {
     const players: IPlayer[] = this.storage.retrieve('players');
@@ -52,6 +55,8 @@ export class PlayersService {
   }
 
   addPlayer(playerName: string, grade: number): void {
+    playerName = playerName.trim();
+
     if (this._players$.value.find(player => player.name === playerName)) {
       throw new Error('Player already exists');
     }

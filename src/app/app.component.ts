@@ -33,7 +33,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.players$ = this.playersService.players$;
     this.selectedPlayers$ = this.playersService.selectedPlayers$;
     this.nbGames$ = this.gameService.games$.map(games => games.length);
 

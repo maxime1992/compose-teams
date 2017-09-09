@@ -101,6 +101,12 @@ export class PlayersComponent implements OnInit, OnDestroy {
         ].valueChanges
           .distinctUntilChanged()
           .debounceTime(200)
+          // avoid triggering the change user grade if
+          // the grade is empty as it'd parse the grade
+          // as integer and set an annoying 0 everytime
+          // we clean all the input before typing something
+          // else (mostly annoying on mobile)
+          .filter(grade => grade)
           .do(grade =>
             this.playersService.changeUserGrade(player.name, +grade)
           );
