@@ -74,7 +74,7 @@ export class PlayersService {
     const updatedPlayers = this._players$.value.filter(
       player => player.name !== name
     );
-    
+
     this._players$.next(updatedPlayers);
     this.persistPlayers(updatedPlayers);
   }
