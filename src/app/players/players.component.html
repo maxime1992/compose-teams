@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFill>
 
   <div class="wrapper-toolbar-button">
-    <md-toolbar color="accent">
+    <md-toolbar color="accent" class="nb-players">
       Players: {{ (selectedPlayers$ | async).length }} / 10
     </md-toolbar>
 
@@ -23,14 +23,15 @@
       (ngSubmit)="addNewPlayer(newPlayerFormGroup.value)"
       fxLayout="column"
       fxLayoutAlign="center center"
+      class="add-player-form"
     >
       <md-input-container fxFlex>
         <input #nameNewPlayer mdInput type="text" placeholder="Name" formControlName="name" autocomplete="off">
       </md-input-container>
 
       <div fxLayout="row">
-        <button md-button>Add</button>
-        <button md-button (click)="isNewPlayerFormGroupVisible = false">Cancel</button>
+        <button type="submit" class="add-btn" md-button>Add</button>
+        <button type="button" class="cancel-btn" md-button (click)="isNewPlayerFormGroupVisible = false">Cancel</button>
       </div>
     </form>
 
@@ -43,8 +44,8 @@
       <ng-container cdkColumnDef="grade">
         <md-header-cell *cdkHeaderCellDef>grade</md-header-cell>
         <md-cell *cdkCellDef="let row">
-          <md-input-container class="grade">
-            <input mdInput type="number" step="0.1" [formControlName]="row.name + '-grade'">
+          <md-input-container class="wrapper-grade">
+            <input mdInput class="grade" type="number" step="0.1" [formControlName]="row.name + '-grade'">
           </md-input-container>
         </md-cell>
       </ng-container>
@@ -59,13 +60,13 @@
       <ng-container cdkColumnDef="select">
         <md-header-cell *cdkHeaderCellDef>select</md-header-cell>
         <md-cell *cdkCellDef="let row">
-          <md-checkbox [formControlName]="row.name + '-is-selected'"></md-checkbox>
+          <md-checkbox [formControlName]="row.name + '-is-selected'" class="is-selected"></md-checkbox>
         </md-cell>
       </ng-container>
 
       <ng-container cdkColumnDef="remove">
         <md-header-cell *cdkHeaderCellDef>Remove</md-header-cell>
-        <md-cell *cdkCellDef="let row">
+        <md-cell *cdkCellDef="let row" class="remove">
           <span (click)="removePlayer(row)" class="delete"><md-icon>delete</md-icon></span>
         </md-cell>
       </ng-container>

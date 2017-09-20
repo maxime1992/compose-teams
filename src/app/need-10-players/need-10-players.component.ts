@@ -6,7 +6,7 @@ import { IPlayer } from 'app/players.interface';
   selector: 'app-need-10-players',
   template: `
     <div fxFill fxLayout="column" fxLayoutAlign="center center">
-      <div>
+      <div class="msg-too-many-or-not-enough-players">
         <span *ngIf="selectedPlayers.length < 10; else tooManyPlayers">
           Not enough player
         </span>
