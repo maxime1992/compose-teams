@@ -1,4 +1,4 @@
-import { $, browser } from 'protractor';
+import { $ } from 'protractor';
 
 export class NavbarPage {
   nbGames = $(`.nb-games`);

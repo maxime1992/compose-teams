@@ -1,6 +1,5 @@
 import { tenPlayers } from '../mock.data';
 import { LocalStorage } from '../utils.e2e';
-import { IPlayer } from './../../src/app/players.interface';
 import { ComposeTeamsPage } from './../pages/compose-teams.po';
 import { ContentPage } from './../pages/content.po';
 import { LeftMenuPage } from './../pages/left-menu.po';

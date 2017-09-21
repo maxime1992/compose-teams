@@ -1,4 +1,4 @@
-import { $, browser, ExpectedConditions as EC } from 'protractor';
+import { $ } from 'protractor';
 
 import { IPlayer } from './../../src/app/players.interface';
 import { PlayersListPage } from './players-list.po';

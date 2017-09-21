@@ -1,4 +1,4 @@
-import { $, $$, browser, ElementFinder } from 'protractor';
+import { $$, ElementFinder } from 'protractor';
 import { promise } from 'selenium-webdriver';
 
 import { IPlayer } from './../../src/app/players.interface';

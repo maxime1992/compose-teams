@@ -1,4 +1,4 @@
-import { $, browser } from 'protractor';
+import { browser } from 'protractor';
 
 import { ContentPage } from './content.po';
 import { LeftMenuPage } from './left-menu.po';

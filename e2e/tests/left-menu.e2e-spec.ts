@@ -1,5 +1,3 @@
-import { $, browser, ExpectedConditions } from 'protractor';
-
 import { IPlayer } from 'app/players.interface';
 import { LocalStorage } from '../utils.e2e';
 import { ComposeTeamsPage } from './../pages/compose-teams.po';

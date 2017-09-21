@@ -7,9 +7,16 @@ cache: yarn
 
 install:
   - yarn install
+  - yarn global add http-server
 
 script:
-  - yarn run build:prod -- --base-href "https://maxime1992.github.io/compose-teams/"
+  - yarn run check
+  - yarn run build:prod -- --progress=false --base-href "https://maxime1992.github.io/compose-teams/"
+  - sed -i 's/<base href="https:\/\/maxime1992.github.io\/compose-teams\/">/<base href="\/">/g' dist/index.html
+  - nohup http-server dist &
+  - sleep 5
+  - yarn run ng -- e2e --serve=false -p 8080
+  - sed -i 's/<base href="\/">/<base href="https:\/\/maxime1992.github.io\/compose-teams\/">/g' dist/index.html
 
 deploy:
   skip_cleanup: true
