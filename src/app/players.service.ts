@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import {
   sortPlayersByGradeAndNames,
@@ -12,14 +13,15 @@ import { IPlayer } from 'app/players.interface';
 export class PlayersService {
   private _players$ = new BehaviorSubject<IPlayer[]>([]);
 
-  public players$ = this._players$
-    .asObservable()
-    .distinctUntilChanged()
-    .map(sortPlayersByNames);
+  public players$ = this._players$.asObservable().pipe(
+    distinctUntilChanged(),
+    map(sortPlayersByNames)
+  );
 
-  public selectedPlayers$ = this.players$
-    .map(players => players.filter(player => player.isSelected))
-    .map(sortPlayersByGradeAndNames);
+  public selectedPlayers$ = this.players$.pipe(
+    map(players => players.filter(player => player.isSelected)),
+    map(sortPlayersByGradeAndNames)
+  );
 
   constructor(private storage: LocalStorageService) {
     const players: IPlayer[] = this.storage.retrieve('players');
@@ -34,8 +36,8 @@ export class PlayersService {
   changeUserGrade(playerName: string, grade: number): void {
     const players = this._players$.value;
 
-    const updatedPlayers = players.map(
-      player => (player.name === playerName ? { ...player, grade } : player)
+    const updatedPlayers = players.map((player: IPlayer) =>
+      player.name === playerName ? { ...player, grade } : player
     );
 
     this._players$.next(updatedPlayers);
@@ -45,9 +47,8 @@ export class PlayersService {
   changeUserIsSelected(playerName: string, isSelected: boolean): void {
     const players = this._players$.value;
 
-    const updatedPlayers = players.map(
-      player =>
-        player.name === playerName ? { ...player, isSelected } : player
+    const updatedPlayers = players.map(player =>
+      player.name === playerName ? { ...player, isSelected } : player
     );
 
     this._players$.next(updatedPlayers);
@@ -74,7 +75,7 @@ export class PlayersService {
     const updatedPlayers = this._players$.value.filter(
       player => player.name !== name
     );
-    
+
     this._players$.next(updatedPlayers);
     this.persistPlayers(updatedPlayers);
   }

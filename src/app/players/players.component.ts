@@ -6,11 +6,16 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MdInput } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subject, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 
+import { MatInput } from '@angular/material/input';
 import { IPlayer } from 'app/players.interface';
 import { PlayersService } from 'app/players.service';
 
@@ -21,7 +26,8 @@ import { PlayersService } from 'app/players.service';
 })
 export class PlayersComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject();
-  @ViewChild(MdInput) nameNewPlayer;
+
+  @ViewChild(MatInput, { static: false }) nameNewPlayer: MatInput;
 
   playersFormGroup: FormGroup;
   selectedPlayers$: Observable<IPlayer[]>;
@@ -47,18 +53,20 @@ export class PlayersComponent implements OnInit, OnDestroy {
     });
 
     this.playersService.players$
-      .takeUntil(this.onDestroy$)
-      .do(players => this.updateFormControl(players))
-      .do(players => {
-        if (players.length === 0) {
-          this.openNewPlayerForm();
-        }
-      })
-      .do(players => (this.nbPlayers = players.length))
+      .pipe(
+        takeUntil(this.onDestroy$),
+        tap((players: IPlayer[]) => {
+          if (players.length === 0) {
+            this.openNewPlayerForm();
+          }
+          this.updateFormControl(players);
+          this.nbPlayers = players.length;
+        })
+      )
       .subscribe();
 
-    this.selectedPlayers$ = this.playersService.selectedPlayers$.takeUntil(
-      this.onDestroy$
+    this.selectedPlayers$ = this.playersService.selectedPlayers$.pipe(
+      takeUntil(this.onDestroy$)
     );
 
     this.dataSource = new ExampleDataSource(this.playersService.players$);
@@ -98,18 +106,17 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
         const gradeSubscription = this.playersFormGroup.controls[
           `${player.name}-grade`
-        ].valueChanges
-          .distinctUntilChanged()
-          .debounceTime(200)
+        ].valueChanges.pipe(
+          distinctUntilChanged(),
+          debounceTime(200),
           // avoid triggering the change user grade if
           // the grade is empty as it'd parse the grade
           // as integer and set an annoying 0 everytime
           // we clean all the input before typing something
           // else (mostly annoying on mobile)
-          .filter(grade => grade)
-          .do(grade =>
-            this.playersService.changeUserGrade(player.name, +grade)
-          );
+          filter(grade => !!grade),
+          tap(grade => this.playersService.changeUserGrade(player.name, +grade))
+        );
 
         this.playersSubscriptions[
           `${player.name}-grade`
@@ -117,11 +124,12 @@ export class PlayersComponent implements OnInit, OnDestroy {
 
         const isSelectedSubscription = this.playersFormGroup.controls[
           `${player.name}-is-selected`
-        ].valueChanges
-          .distinctUntilChanged()
-          .do(isSelected =>
+        ].valueChanges.pipe(
+          distinctUntilChanged(),
+          tap(isSelected =>
             this.playersService.changeUserIsSelected(player.name, isSelected)
-          );
+          )
+        );
 
         this.playersSubscriptions[
           `${player.name}-is-selected`
@@ -160,7 +168,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
     this.playersService.removePlayer(player.name);
   }
 
-  trackByName(index, player: IPlayer) {
+  trackByName(index: number, player: IPlayer) {
     return player.name;
   }
 

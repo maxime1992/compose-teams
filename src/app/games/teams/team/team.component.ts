@@ -7,8 +7,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { IPlayer } from 'app/players.interface';
 

@@ -18,12 +18,12 @@ import { IPlayer } from 'app/players.interface';
         <span>to generate the possible games</span>
       </div>
 
-      <md-icon class="color-primary">mood_bad</md-icon>
+      <mat-icon class="color-primary">mood_bad</mat-icon>
     </div>
   `,
   styles: [
     `
-    md-icon {
+    mat-icon {
       font-size: 45px;
       margin-top: 20px;
     }

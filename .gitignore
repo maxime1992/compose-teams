@@ -19,6 +19,7 @@
 .history
 
 # IDE - VSCode
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -33,6 +34,7 @@
 npm-debug.log
 testem.log
 /typings
+package-lock.json
 
 # e2e
 /e2e/*.js

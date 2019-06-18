@@ -8,9 +8,26 @@
   }
 }
 
-md-table {
+mat-table {
+  .mat-header-row,
+  .mat-row {
+    height: 56px;
+  }
+
   .grade {
     width: 50px;
+  }
+
+  .mat-column-select {
+    &.cell-select {
+      padding-left: 16px;
+    }
+    &.cell-select:first-of-type {
+      padding-left: 16px;
+    }
+    + .cell-select {
+      padding-left: 16px;
+    }
   }
 
   .delete {

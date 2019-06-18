@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFill>
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="toggleSidenav()">
-      <md-icon>menu</md-icon>
+  <mat-toolbar color="primary">
+    <button mat-icon-button type="button" (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
     </button>
 
     <span class="bold">Compose teams</span>
@@ -12,12 +12,12 @@
         {{ nbGames }} games available
       </span>
     </span>
-  </md-toolbar>
+  </mat-toolbar>
 
-  <md-sidenav-container fxFlex>
-    <md-sidenav #sidenav [mode]="sidenavType" [opened]="isSidenavOpened">
+  <mat-sidenav-container fxFlex>
+    <mat-sidenav #sidenav [mode]="sidenavType" [opened]="isSidenavOpened">
       <app-players></app-players>
-    </md-sidenav>
+    </mat-sidenav>
 
     <div *ngIf="selectedPlayers$ | async as selectedPlayers" fxFill>
       <app-games *ngIf="selectedPlayers.length === 10; else need10Players"></app-games>
@@ -26,5 +26,5 @@
         <app-need-10-players [selectedPlayers]="selectedPlayers"></app-need-10-players>
       </ng-template>
     </div>
-  </md-sidenav-container>
+  </mat-sidenav-container>
 </div>

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { MdSidenav } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 
 import { GamesService } from 'app/games.service';
 import { IPlayer } from 'app/players.interface';
@@ -18,39 +18,45 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public isSidenavOpened: boolean;
   public sidenavType: 'over' | 'side';
+  public activeMediaQuery = '';
 
   nbGames$: Observable<number>;
 
   players$: Observable<IPlayer[]>;
   selectedPlayers$: Observable<IPlayer[]>;
 
-  @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
 
   constructor(
     private playersService: PlayersService,
     private gameService: GamesService,
-    private media: ObservableMedia
+    private media$: MediaObserver
   ) {}
 
   ngOnInit() {
     this.selectedPlayers$ = this.playersService.selectedPlayers$;
-    this.nbGames$ = this.gameService.games$.map(games => games.length);
+    this.nbGames$ = this.gameService.games$.pipe(map(games => games.length));
 
-    this.media
+    this.media$
       .asObservable()
-      .takeUntil(this.onDestroy$)
-      .map((change: MediaChange) => change.mqAlias as 'xs' | 'sm' | 'md' | 'lg')
-      .distinctUntilChanged()
-      .do(size => {
-        if (size === 'xs' || size === 'sm') {
-          this.closeSidenav();
-          this.sidenavType = 'over';
-        } else {
-          this.isSidenavOpened = true;
-          this.openSidenav();
-          this.sidenavType = 'side';
-        }
-      })
+      .pipe(
+        map(
+          (changes: MediaChange[]) =>
+            changes[0].mqAlias as 'xs' | 'sm' | 'md' | 'lg'
+        ),
+        distinctUntilChanged(),
+        takeUntil(this.onDestroy$),
+        tap(size => {
+          if (size === 'xs' || size === 'sm') {
+            this.closeSidenav();
+            this.sidenavType = 'over';
+          } else {
+            this.isSidenavOpened = true;
+            this.openSidenav();
+            this.sidenavType = 'side';
+          }
+        })
+      )
       .subscribe();
   }
 

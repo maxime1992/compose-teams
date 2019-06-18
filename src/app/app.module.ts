@@ -1,29 +1,48 @@
+// Modules 3rd party
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdSidenavModule,
-  MdTableModule,
-  MdToolbarModule,
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
-import { AppComponent } from 'app/app.component';
+// Shared
 import { GamesService } from 'app/games.service';
+import { PlayersService } from 'app/players.service';
+
+// Main
+import { AppComponent } from 'app/app.component';
+
+// Components
 import { GamesComponent } from 'app/games/games.component';
 import { TeamComponent } from 'app/games/teams/team/team.component';
 import { TeamsComponent } from 'app/games/teams/teams.component';
-import { PlayersService } from 'app/players.service';
 import { PlayersComponent } from 'app/players/players.component';
 import { Need10PlayersComponent } from './need-10-players/need-10-players.component';
+
+export const MaterialModules = [
+  CdkTableModule,
+  MatTableModule,
+  MatToolbarModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatSidenavModule,
+  FlexLayoutModule,
+  MatCardModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatIconModule,
+];
 
 @NgModule({
   declarations: [
@@ -35,20 +54,14 @@ import { Need10PlayersComponent } from './need-10-players/need-10-players.compon
     Need10PlayersComponent,
   ],
   imports: [
+    // Material Modules
+    ...MaterialModules,
+    // Angular Modules
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MdTableModule,
-    CdkTableModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdSidenavModule,
-    FlexLayoutModule,
-    MdCardModule,
-    MdButtonModule,
-    MdCheckboxModule,
-    MdIconModule,
-    Ng2Webstorage,
+    // LocalStorage Module
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [PlayersService, GamesService],
   bootstrap: [AppComponent],

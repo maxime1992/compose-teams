@@ -1,18 +1,18 @@
 <div fxLayout="column" fxFill>
 
   <div class="wrapper-toolbar-button">
-    <md-toolbar color="accent">
+    <mat-toolbar color="accent">
       Players: {{ (selectedPlayers$ | async).length }} / 10
-    </md-toolbar>
+    </mat-toolbar>
 
     <button
-      md-mini-fab
+      mat-mini-fab
       color="primary"
       *ngIf="!isNewPlayerFormGroupVisible"
       (click)="openNewPlayerForm()"
       class="add-player"
     >
-      +
+      <mat-icon>add</mat-icon>
     </button>
   </div>
 
@@ -24,13 +24,14 @@
       fxLayout="column"
       fxLayoutAlign="center center"
     >
-      <md-input-container fxFlex>
-        <input #nameNewPlayer mdInput type="text" placeholder="Name" formControlName="name" autocomplete="off">
-      </md-input-container>
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input id="nameNewPlayer" matInput type="text" formControlName="name" autocomplete="off">
+      </mat-form-field>
 
       <div fxLayout="row">
-        <button md-button>Add</button>
-        <button md-button (click)="isNewPlayerFormGroupVisible = false">Cancel</button>
+        <button mat-button>Add</button>
+        <button mat-button (click)="isNewPlayerFormGroupVisible = false">Cancel</button>
       </div>
     </form>
 
@@ -39,40 +40,41 @@
       <p>You can <span (click)="openNewPlayerForm()" class="color-primary cursor-pointer"><b>add one</b></span></p>
     </div>
 
-    <md-table *ngIf="nbPlayers && playersFormGroup" [dataSource]="dataSource" [trackBy]="trackByName" [formGroup]="playersFormGroup">
-      <ng-container cdkColumnDef="grade">
-        <md-header-cell *cdkHeaderCellDef>grade</md-header-cell>
-        <md-cell *cdkCellDef="let row">
-          <md-input-container class="grade">
-            <input mdInput type="number" step="0.1" [formControlName]="row.name + '-grade'">
-          </md-input-container>
-        </md-cell>
+    <mat-table *ngIf="nbPlayers && playersFormGroup" [dataSource]="dataSource" [trackBy]="trackByName" [formGroup]="playersFormGroup">
+      
+      <ng-container cdkColumnDef="name">
+        <mat-header-cell cdk-header-cell *cdkHeaderCellDef>Name</mat-header-cell>
+        <mat-cell cdk-cell *cdkCellDef="let row" class="name">
+          {{ row.name }}
+        </mat-cell>
       </ng-container>
 
-      <ng-container cdkColumnDef="name">
-        <md-header-cell *cdkHeaderCellDef>Name</md-header-cell>
-        <md-cell *cdkCellDef="let row" class="name">
-          {{ row.name }}
-        </md-cell>
+      <ng-container cdkColumnDef="grade">
+        <mat-header-cell cdk-header-cell *cdkHeaderCellDef fxLayoutAlign="start center">Grade</mat-header-cell>
+        <mat-cell cdk-cell *cdkCellDef="let row" fxLayoutAlign="start center" class="grade-select">
+          <mat-form-field appearance="standard" class="grade">
+            <input matInput type="number" step="0.1" [formControlName]="row.name + '-grade'">
+          </mat-form-field>
+        </mat-cell>
       </ng-container>
 
       <ng-container cdkColumnDef="select">
-        <md-header-cell *cdkHeaderCellDef>select</md-header-cell>
-        <md-cell *cdkCellDef="let row">
-          <md-checkbox [formControlName]="row.name + '-is-selected'"></md-checkbox>
-        </md-cell>
+        <mat-header-cell cdk-header-cell *cdkHeaderCellDef fxLayoutAlign="start center">Select</mat-header-cell>
+        <mat-cell cdk-cell *cdkCellDef="let row" fxLayoutAlign="start center" class="cell-select">
+          <mat-checkbox [formControlName]="row.name + '-is-selected'"></mat-checkbox>
+        </mat-cell>
       </ng-container>
 
       <ng-container cdkColumnDef="remove">
-        <md-header-cell *cdkHeaderCellDef>Remove</md-header-cell>
-        <md-cell *cdkCellDef="let row">
-          <span (click)="removePlayer(row)" class="delete"><md-icon>delete</md-icon></span>
-        </md-cell>
+        <mat-header-cell cdk-header-cell *cdkHeaderCellDef fxLayoutAlign="start center">Remove</mat-header-cell>
+        <mat-cell cdk-cell *cdkCellDef="let row" fxLayoutAlign="start center" class="cell-remove">
+          <button mat-icon-button (click)="removePlayer(row)" class="delete"><mat-icon>delete</mat-icon></button>
+        </mat-cell>
       </ng-container>
 
-      <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-      <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
-    </md-table>
+      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </div>
 
 </div>

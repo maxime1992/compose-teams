@@ -12,7 +12,7 @@ export function generateGames(players: IPlayer[]): IGame[] {
   const teams = generateTeams(players);
   const complement = (t: IPlayer[]) => players.filter(p => !t.includes(p));
   return teams
-    .map(team1 => {
+    .map((team1: IPlayer[]) => {
       const team2 = complement(team1);
       const total1 = grade(team1);
       const total2 = grade(team2);
@@ -51,6 +51,6 @@ function grade(player: IPlayer | IPlayer[]): number {
   }
 }
 
-function plus(a, b) {
+function plus(a: number, b: number) {
   return a + b;
 }
